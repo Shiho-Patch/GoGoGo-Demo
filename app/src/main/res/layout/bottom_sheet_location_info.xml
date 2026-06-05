@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottom_sheet_card"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardElevation="@dimen/elevation_level3"
+    app:cardCornerRadius="@dimen/radius_xl"
+    app:cardCornerRadiusTopStart="@dimen/radius_xl"
+    app:cardCornerRadiusTopEnd="@dimen/radius_xl"
+    app:cardCornerRadiusBottomStart="0dp"
+    app:cardCornerRadiusBottomEnd="0dp"
+    app:cardBackgroundColor="@color/md_theme_surface"
+    app:strokeWidth="0dp"
+    android:clickable="false"
+    android:focusable="false">
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        
+        <!-- Drag Handle -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:paddingVertical="@dimen/spacing_sm">
+            
+            <View
+                android:id="@+id/drag_handle"
+                android:layout_width="@dimen/spacing_xxl"
+                android:layout_height="@dimen/spacing_xs"
+                android:background="@drawable/bg_drag_handle"
+                android:contentDescription="@string/drag_handle" />
+                
+        </LinearLayout>
+        
+        <!-- Collapsed State: Quick Info -->
+        <LinearLayout
+            android:id="@+id/collapsed_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/spacing_lg"
+            android:paddingBottom="@dimen/spacing_md"
+            android:gravity="center_vertical">
+            
+            <!-- Location Icon -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginEnd="@dimen/spacing_md"
+                app:cardCornerRadius="@dimen/radius_full"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="@color/md_theme_primaryContainer">
+                
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_location_on_24"
+                    android:tint="@color/md_theme_onPrimaryContainer"
+                    android:contentDescription="@string/location" />
+                    
+            </com.google.android.material.card.MaterialCardView>
+            
+            <!-- Location Text -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                
+                <TextView
+                    android:id="@+id/tv_location_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/unknown_location"
+                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                    android:textColor="@color/md_theme_onSurface"
+                    android:maxLines="1"
+                    android:ellipsize="end" />
+                
+                <TextView
+                    android:id="@+id/tv_coordinates"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_xs"
+                    android:text="@string/default_coordinates"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                    android:textColor="@color/md_theme_onSurfaceVariant" />
+                    
+            </LinearLayout>
+            
+            <!-- Expand Arrow -->
+            <ImageView
+                android:id="@+id/iv_expand_arrow"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="@dimen/spacing_sm"
+                android:src="@drawable/ic_expand_more_24"
+                android:tint="@color/md_theme_onSurfaceVariant"
+                android:contentDescription="@string/expand" />
+                
+        </LinearLayout>
+        
+        <!-- Divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/stroke_width_sm"
+            android:background="@color/md_theme_outlineVariant"
+            android:layout_marginHorizontal="@dimen/spacing_lg" />
+        
+        <!-- Expanded State: Detailed Info -->
+        <LinearLayout
+            android:id="@+id/expanded_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/spacing_lg"
+            android:visibility="gone">
+            
+            <!-- Address -->
+            <TextView
+                android:id="@+id/tv_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/unknown_address"
+                android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                android:textColor="@color/md_theme_onSurface" />
+            
+            <!-- Detailed Coordinates -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_md"
+                app:cardCornerRadius="@dimen/radius_md"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="@color/md_theme_surfaceVariant">
+                
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/spacing_md">
+                    
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/coordinates_details"
+                        android:textAppearance="@style/TextAppearance.Material3.LabelMedium"
+                        android:textColor="@color/md_theme_onSurfaceVariant"
+                        android:layout_marginBottom="@dimen/spacing_sm" />
+                    
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+                            
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/latitude"
+                                android:textAppearance="@style/TextAppearance.Material3.LabelSmall"
+                                android:textColor="@color/md_theme_onSurfaceVariant" />
+                            
+                            <TextView
+                                android:id="@+id/tv_latitude"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/default_latitude"
+                                android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                                android:textColor="@color/md_theme_onSurface"
+                                android:layout_marginTop="@dimen/spacing_xs" />
+                                
+                        </LinearLayout>
+                        
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+                            
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/longitude"
+                                android:textAppearance="@style/TextAppearance.Material3.LabelSmall"
+                                android:textColor="@color/md_theme_onSurfaceVariant" />
+                            
+                            <TextView
+                                android:id="@+id/tv_longitude"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/default_longitude"
+                                android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                                android:textColor="@color/md_theme_onSurface"
+                                android:layout_marginTop="@dimen/spacing_xs" />
+                                
+                        </LinearLayout>
+                        
+                    </LinearLayout>
+                    
+                </LinearLayout>
+                
+            </com.google.android.material.card.MaterialCardView>
+            
+            <!-- Action Buttons -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/spacing_lg"
+                android:gravity="end">
+                
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_share"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/spacing_sm"
+                    android:text="@string/share"
+                    app:icon="@drawable/ic_share_24"
+                    style="@style/Widget.GoGoGo.Button.Outlined" />
+                
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_save_favorite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/save_favorite"
+                    app:icon="@drawable/ic_star_border_24"
+                    style="@style/Widget.GoGoGo.Button" />
+                    
+            </LinearLayout>
+            
+        </LinearLayout>
+        
+    </LinearLayout>
+    
+</com.google.android.material.card.MaterialCardView>

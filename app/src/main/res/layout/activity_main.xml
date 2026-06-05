@@ -1,24 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawer_layout"
+    android:id="@+id/root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:openDrawer="start">
-
-    <include
-        layout="@layout/main_content"
+    tools:context="com.zcshou.gogogo.MainActivity"
+    tools:theme="@style/Theme.GoGoGo.Main">
+    
+    <!-- Map View - 地图 -->
+    <com.baidu.mapapi.map.MapView
+        android:id="@+id/map_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/nav_view"
-        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_gravity="start"
-        app:headerLayout="@layout/nav_header"
-        app:menu="@menu/menu_nav" />
-
-</androidx.drawerlayout.widget.DrawerLayout>
+        android:clickable="true" />
+    
+    <!-- AppBar Layout with Material 3 Top App Bar -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        android:background="@android:color/transparent"
+        app:elevation="0dp">
+        
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginHorizontal="@dimen/spacing_md"
+            android:layout_marginTop="@dimen/spacing_md"
+            android:elevation="@dimen/elevation_level3"
+            app:contentInsetStart="0dp"
+            app:navigationIcon="@drawable/ic_menu_24"
+            app:navigationIconTint="@color/md_theme_onSurface"
+            app:title="@string/app_name"
+            app:titleTextColor="@color/md_theme_onSurface"
+            app:subtitleTextColor="@color/md_theme_onSurfaceVariant"
+            app:menu="@menu/main_toolbar"
+            app:itemIconTint="@color/md_theme_onSurface"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.GoGoGo.Toolbar" />
+            
+    </com.google.android.material.appbar.AppBarLayout>
+    
+    <!-- FAB Container for Material 3 Floating Action Buttons -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:orientation="vertical"
+        android:gravity="end"
+        android:layout_margin="@dimen/spacing_lg"
+        android:clipChildren="false"
+        android:clipToPadding="false">
+        
+        <!-- Small FAB: Zoom In -->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_zoom_in"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_sm"
+            android:src="@drawable/ic_add_24"
+            android:contentDescription="@string/zoom_in"
+            app:fabSize="mini"
+            app:tint="@color/md_theme_onPrimary" />
+        
+        <!-- Small FAB: Zoom Out -->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_zoom_out"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_sm"
+            android:src="@drawable/ic_remove_24"
+            android:contentDescription="@string/zoom_out"
+            app:fabSize="mini"
+            app:tint="@color/md_theme_onPrimary" />
+        
+        <!-- Small FAB: My Location -->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_my_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_sm"
+            android:src="@drawable/ic_my_location_24"
+            android:contentDescription="@string/my_location"
+            app:fabSize="mini"
+            app:tint="@color/md_theme_onPrimary" />
+        
+        <!-- Main FAB: Start/Stop Mocking -->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_main"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_play_arrow_24"
+            android:contentDescription="@string/start_mocking"
+            app:fabSize="normal"
+            app:tint="@color/md_theme_onPrimary" />
+            
+    </LinearLayout>
+    
+    <!-- Bottom Sheet Behavior for Location Info -->
+    <include
+        android:id="@+id/location_bottom_sheet"
+        layout="@layout/bottom_sheet_location_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+        app:behavior_peekHeight="@dimen/bottom_sheet_peek_height"
+        app:behavior_hideable="false"
+        app:behavior_draggable="true"
+        app:behavior_skipCollapsed="false" />
+        
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

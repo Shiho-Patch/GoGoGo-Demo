@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    
+    <item
+        android:id="@+id/action_search"
+        android:icon="@drawable/ic_search_24"
+        android:title="@string/search"
+        android:contentDescription="@string/search"
+        app:showAsAction="ifRoom" />
+        
+    <item
+        android:id="@+id/action_routes"
+        android:icon="@drawable/ic_route_24"
+        android:title="@string/routes"
+        android:contentDescription="@string/routes"
+        app:showAsAction="ifRoom" />
+        
+    <item
+        android:id="@+id/action_map_type"
+        android:icon="@drawable/ic_layers_24"
+        android:title="@string/map_type"
+        android:contentDescription="@string/map_type"
+        app:showAsAction="ifRoom" />
+        
+    <item
+        android:id="@+id/action_favorites"
+        android:title="@string/favorites"
+        app:showAsAction="never" />
+        
+    <item
+        android:id="@+id/action_history"
+        android:title="@string/history"
+        app:showAsAction="never" />
+        
+    <item
+        android:id="@+id/action_settings"
+        android:title="@string/settings"
+        app:showAsAction="never" />
+        
+    <item
+        android:id="@+id/action_about"
+        android:title="@string/about"
+        app:showAsAction="never" />
+        
+</menu>
