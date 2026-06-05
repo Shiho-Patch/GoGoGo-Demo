@@ -15,6 +15,7 @@ import com.zcshou.gogogo.data.repository.FavoriteRepository;
 import com.zcshou.gogogo.data.repository.LocationRepository;
 import com.zcshou.gogogo.data.repository.RouteRepository;
 import com.zcshou.gogogo.data.repository.SettingsRepository;
+import com.zcshou.gogogo.map.MapEngine;
 import com.zcshou.gogogo.ui.base.BaseViewModel;
 
 import java.util.List;
@@ -41,6 +42,8 @@ public class MainViewModel extends BaseViewModel {
     private final MutableLiveData<Integer> mapType = new MutableLiveData<>(0);
     private final MutableLiveData<Boolean> showTraffic = new MutableLiveData<>(false);
     private final MutableLiveData<Float> mapZoom = new MutableLiveData<>(16.0f);
+    private final MutableLiveData<MapEngine.MapProvider> mapProvider = new MutableLiveData<>(MapEngine.MapProvider.BAIDU);
+    private final MutableLiveData<MapEngine.MapType> mapDisplayType = new MutableLiveData<>(MapEngine.MapType.NORMAL);
     
     public MainViewModel(@NonNull Application application) {
         super();
@@ -176,5 +179,23 @@ public class MainViewModel extends BaseViewModel {
     
     public int getMockInterval() {
         return settingsRepository.getMockInterval();
+    }
+
+    // =============== Map Engine Support ===============
+
+    public LiveData<MapEngine.MapProvider> getMapProvider() {
+        return mapProvider;
+    }
+
+    public void setMapProvider(MapEngine.MapProvider provider) {
+        mapProvider.setValue(provider);
+    }
+
+    public LiveData<MapEngine.MapType> getMapDisplayType() {
+        return mapDisplayType;
+    }
+
+    public void setMapDisplayType(MapEngine.MapType type) {
+        mapDisplayType.setValue(type);
     }
 }

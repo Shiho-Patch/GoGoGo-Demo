@@ -97,6 +97,19 @@
     <string name="permission_location_message">需要位置权限以使用地图功能</string>
     <string name="permission_grant">授予权限</string>
     
+    <!-- Map Options -->
+    <string name="map_options">地图选项</string>
+    <string name="select_map_provider">选择地图提供商</string>
+    <string name="select_map_type">选择地图类型</string>
+    <string name="baidu_map">百度地图</string>
+    <string name="amap_map">高德地图</string>
+    <string name="map_normal">普通地图</string>
+    <string name="map_normal_desc">标准矢量地图，清晰易读</string>
+    <string name="map_satellite">卫星地图</string>
+    <string name="map_satellite_desc">真实卫星影像，直观明了</string>
+    <string name="map_traffic">路况地图</string>
+    <string name="map_traffic_desc">实时交通状况，出行必备</string>
+
     <!-- Notifications -->
     <string name="notification_channel_name">位置模拟</string>
     <string name="notification_channel_description">显示位置模拟状态</string>

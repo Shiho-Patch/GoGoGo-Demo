@@ -155,6 +155,11 @@ dependencies {
     // Baidu Maps SDK
     implementation files('libs/BaiduLBS_Android.jar')
     
+    // AMap SDK (高德地图)
+    implementation 'com.amap.api:3dmap:9.7.1'
+    implementation 'com.amap.api:location:6.5.0'
+    implementation 'com.amap.api:search:9.7.0'
+    
     // Testing
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.2.1'
