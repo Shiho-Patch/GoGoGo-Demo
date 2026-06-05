@@ -55,7 +55,7 @@
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/Theme.GoGoGo.Main">
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="Ej7yXb88zSEeJBmyUoDw0b40lrQBrU7h" />
@@ -87,21 +87,21 @@
         <activity
             android:name=".WelcomeActivity"
             android:exported="true"
-            android:theme="@style/AppTheme.NoActionBar"
+            android:theme="@style/Theme.GoGoGo"
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RouteCreateActivity" android:label="绘制路线" android:parentActivityName=".MainActivity" android:theme="@style/AppTheme"/>
-        <activity android:name=".RouteRunActivity" android:label="路线模拟" android:parentActivityName=".MainActivity" android:theme="@style/AppTheme"/>
+        <activity android:name=".RouteCreateActivity" android:label="绘制路线" android:parentActivityName=".MainActivity" android:theme="@style/Theme.GoGoGo"/>
+        <activity android:name=".RouteRunActivity" android:label="路线模拟" android:parentActivityName=".MainActivity" android:theme="@style/Theme.GoGoGo"/>
 
         <activity
             android:name=".MainActivity"
             android:launchMode="singleInstance"
             android:exported="false"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/Theme.GoGoGo.Main" />
         <activity
             android:name=".RouteActivity"
             android:label="路线管理"

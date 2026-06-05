@@ -33,7 +33,7 @@ public class GoApplication extends Application {
         SDKInitializer.setAgreePrivacy(this, true);
         // 百度定位 7.5 开始，要求必须同意隐私政策，默认为false(官方说可以统一为以上接口，但实际测试并不行，定位还是需要单独设置)
         LocationClient.setAgreePrivacy(true);
-        SDKInitializer.setApiKey(BuildConfig.MAPS_API_KEY);
+        SDKInitializer.setApiKey("Ej7yXb88zSEeJBmyUoDw0b40lrQBrU7h");
         // 在使用 SDK 各组间之前初始化 context 信息，传入 ApplicationContext
         SDKInitializer.initialize(this);
 
