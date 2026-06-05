@@ -37,10 +37,14 @@
 - ✅ 步骤 4.5：SettingsRepository
 - ✅ 步骤 4.6：RepositoryManager
 
-### 🎨 阶段五：UI 层重构（主界面）- 进行中
-- 🔄 步骤 5.1：重构 MainViewModel - 部分完成
-- ⏳ 步骤 5.2：重构 MainActivity（上）
-- ⏳ 步骤 5.3：重构 MainActivity（下）
+### 🎨 阶段五：UI 层重构（主界面）- 100%
+- ✅ 步骤 5.1：重构 MainViewModel - 已完成
+- ✅ 步骤 5.2：重构 MainActivity（上）- 已完成
+- ✅ 步骤 5.3：重构 MainActivity（下）- 已完成
+- ✅ 新增：Material Design 3 主题和样式
+- ✅ 新增：双地图引擎架构（百度+高德）
+- ✅ 新增：地图选项对话框
+- ✅ 新增：底部抽屉 UI
 
 ---
 

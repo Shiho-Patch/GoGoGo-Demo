@@ -10,12 +10,11 @@
     tools:context="com.zcshou.gogogo.MainActivity"
     tools:theme="@style/Theme.GoGoGo.Main">
     
-    <!-- Map View - 地图 -->
-    <com.baidu.mapapi.map.MapView
-        android:id="@+id/map_view"
+    <!-- Map Container - 地图容器 -->
+    <FrameLayout
+        android:id="@+id/map_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clickable="true" />
+        android:layout_height="match_parent" />
     
     <!-- AppBar Layout with Material 3 Top App Bar -->
     <com.google.android.material.appbar.AppBarLayout
