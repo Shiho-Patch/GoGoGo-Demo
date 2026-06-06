@@ -50,4 +50,22 @@
         <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
     </style>
     
+    <!-- Basic Button Styles for compatibility -->
+    <style name="Widget.GoGoGo.Button" parent="Widget.Material3.Button">
+        <item name="cornerRadius">12dp</item>
+    </style>
+    
+    <style name="Widget.GoGoGo.Button.Outlined" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="cornerRadius">12dp</item>
+    </style>
+    
+    <!-- Shape Appearance Overlays -->
+    <style name="ShapeAppearanceOverlay.GoGoGo.Toolbar" parent="">
+        <item name="cornerSize">0dp</item>
+    </style>
+    
+    <style name="ShapeAppearanceOverlay.GoGoGo.Circle" parent="">
+        <item name="cornerSize">50%</item>
+    </style>
+    
 </resources>
