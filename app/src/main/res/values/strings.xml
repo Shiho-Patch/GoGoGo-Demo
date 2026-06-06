@@ -77,7 +77,6 @@
     <string name="clipboard_empty">剪贴板为空，请先复制路线数据</string>
     <string name="clipboard_invalid">剪贴板内容无效</string>
     <string name="route_imported">导入成功</string>
-    <string name="export_to_clipboard">导出到剪贴板</string>
     <string name="delete_route_option">删除路线</string>
     <string name="action">操作</string>
     
