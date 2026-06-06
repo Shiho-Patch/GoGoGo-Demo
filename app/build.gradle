@@ -1,14 +1,12 @@
 plugins {
     id "com.android.application"
     id "org.jetbrains.kotlin.android"
-    // 谷歌官方推荐的用于隐藏地图 KEY 的插件 https://developers.google.com/maps/documentation/places/android-sdk/secrets-gradle-plugin?hl=zh-cn
     id "com.google.android.libraries.mapsplatform.secrets-gradle-plugin"
 }
 
 android {
     ndkVersion = '26.2.11394342'
     compileSdk = 34
-    buildToolsVersion = '34.0.0'
     namespace = 'com.zcshou.gogogo'
 
     signingConfigs {
@@ -31,11 +29,10 @@ android {
         minSdkVersion 27
         targetSdkVersion 34
         versionCode 1123
-        versionName '1.12.3' // https://semver.org/lang/zh-CN/
+        versionName '1.12.3'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         resourceConfigurations += ['zh', 'zh-rCN', 'en', 'en-rUS']
         ndk {
-            //noinspection ChromeOsAbiSupport
             abiFilters "arm64-v8a"
         }
         signingConfig = signingConfigs.release
@@ -45,19 +42,9 @@ android {
 
     buildTypes {
         release {
-            // Enables code shrinking, obfuscation, and optimization for only
-            // your project's release build type.
             minifyEnabled = true
-
-            // Enables resource shrinking, which is performed by the
-            // Android Gradle plugin.
             shrinkResources = true
-
-            // Includes the default ProGuard rules files that are packaged with
-            // the Android Gradle plugin. To learn more, go to the section about
-            // R8 configuration files.
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-
             signingConfig = signingConfigs.release
             multiDexEnabled = true
         }
@@ -66,7 +53,6 @@ android {
         }
     }
 
-    // 要存取 secret value 必須要使用到一個 BuildScript 的類別，默认会从 local.properties 中获取
     buildFeatures {
         buildConfig = true
         viewBinding = true
@@ -101,7 +87,6 @@ android {
         includeInBundle = false
     }
 
-    // 指定输出的可执行程序的名字
     applicationVariants.configureEach { variant ->
         variant.outputs.configureEach { output ->
             def outputFile = output.outputFile
@@ -139,7 +124,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-runtime:2.8.4'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.8.4'
     
-    // Room (will be used later)
+    // Room
     implementation 'androidx.room:room-runtime:2.6.1'
     annotationProcessor 'androidx.room:room-compiler:2.6.1'
     
@@ -152,13 +137,8 @@ dependencies {
     // Markdown
     implementation 'io.noties.markwon:core:4.6.2'
     
-    // Baidu Maps SDK
+    // Baidu Maps SDK (local JAR)
     implementation files('libs/BaiduLBS_Android.jar')
-    
-    // AMap SDK (高德地图)
-    implementation 'com.amap.api:3dmap:9.7.1'
-    implementation 'com.amap.api:location:6.5.0'
-    implementation 'com.amap.api:search:9.7.0'
     
     // Testing
     testImplementation 'junit:junit:4.13.2'
