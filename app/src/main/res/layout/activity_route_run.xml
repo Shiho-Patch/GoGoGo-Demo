@@ -1,82 +1,177 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
 
-    <com.baidu.mapapi.map.MapView
-        android:id="@+id/map_run"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clickable="true" />
-
-    <LinearLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="#FFFFFF"
-        android:orientation="vertical"
-        android:padding="10dp">
-        
-        <TextView
-            android:id="@+id/tv_current_route"
+        android:fitsSystemWindows="true"
+        app:liftOnScroll="true">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:title="@string/route_simulation" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <com.baidu.mapapi.map.MapView
+            android:id="@+id/map_run"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:clickable="true"
+            app:layout_constraintBottom_toTopOf="@id/bottom_bar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.bottomappbar.BottomAppBar
+            android:id="@+id/bottom_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="当前路线: 未选择"
-            android:layout_marginBottom="5dp"/>
+            android:layout_gravity="bottom"
+            app:backgroundTint="@color/md_theme_surface"
+            app:contentInsetStart="0dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginBottom="5dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="@dimen/spacing_md"
+                android:paddingVertical="@dimen/spacing_sm">
 
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="速度:"/>
-            <EditText
-                android:id="@+id/et_run_speed"
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
-                android:inputType="numberDecimal"
-                android:text="3.8"
-                android:gravity="center"/>
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="m/s"/>
-            
-            <View android:layout_width="10dp" android:layout_height="1dp"/>
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/spacing_sm"
+                    app:cardCornerRadius="@dimen/radius_sm"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="1dp"
+                    app:strokeColor="@color/md_theme_outline">
 
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="循环:"/>
-            <EditText
-                android:id="@+id/et_loop_count"
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                android:text="10"
-                android:gravity="center"/>
-            
-            <View android:layout_width="10dp" android:layout_height="1dp"/>
+                    <TextView
+                        android:id="@+id/tv_current_route"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/no_route_selected"
+                        android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                        android:padding="@dimen/spacing_md"/>
 
-            <CheckBox
-                android:id="@+id/cb_speed_float"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="速度浮动"
-                android:checked="true"/>
-            
-            <View android:layout_width="0dp" android:layout_height="0dp" android:layout_weight="1"/>
-            
-            <Button
-                android:id="@+id/btn_run_load"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="选路线"
-                style="@style/Widget.AppCompat.Button.Colored"/>
-        </LinearLayout>
-        
-        <Button
-            android:id="@+id/btn_run_toggle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="开始模拟"
-            android:backgroundTint="@color/colorPrimary"
-            android:textColor="#FFFFFF"/>
-    </LinearLayout>
-</RelativeLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="@dimen/spacing_sm">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/speed_label"
+                        android:textAppearance="@style/TextAppearance.Material3.BodyMedium"/>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/spacing_sm"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_run_speed"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="numberDecimal"
+                            android:text="3.8"
+                            android:gravity="center"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/spacing_sm"
+                        android:text="m/s"
+                        android:textAppearance="@style/TextAppearance.Material3.BodyMedium"/>
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/loop_label"
+                        android:textAppearance="@style/TextAppearance.Material3.BodyMedium"/>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/spacing_sm"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_loop_count"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="number"
+                            android:text="10"
+                            android:gravity="center"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="@dimen/spacing_sm">
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        android:id="@+id/cb_speed_float"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/speed_float"
+                        android:checked="true"/>
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_run_load"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/select_route"
+                        app:icon="@drawable/ic_route_24"/>
+
+                </LinearLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_run_toggle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/start_simulation"
+                    app:icon="@drawable/ic_play_arrow_24"/>
+
+            </LinearLayout>
+
+        </com.google.android.material.bottomappbar.BottomAppBar>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

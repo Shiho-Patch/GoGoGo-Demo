@@ -115,6 +115,11 @@
             android:name=".HistoryActivity"
             android:label="@string/app_history"
             android:exported="false" />
+        <activity
+            android:name=".FavoriteActivity"
+            android:label="@string/favorites"
+            android:parentActivityName=".MainActivity"
+            android:exported="false" />
 
     </application>
 

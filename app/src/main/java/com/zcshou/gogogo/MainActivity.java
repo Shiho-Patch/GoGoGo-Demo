@@ -17,9 +17,15 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 
 import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
@@ -41,6 +47,10 @@ import com.zcshou.gogogo.map.MapEngineFactory;
 import com.zcshou.gogogo.ui.base.BaseActivity;
 import com.zcshou.gogogo.ui.dialog.MapOptionsDialogFragment;
 import com.zcshou.gogogo.ui.viewmodel.MainViewModel;
+import com.zcshou.gogogo.ui.viewmodel.FavoriteViewModel;
+import com.zcshou.service.ServiceGo;
+import com.zcshou.utils.GoUtils;
+import com.zcshou.utils.MapUtils;
 
 import com.elvishew.xlog.XLog;
 
@@ -48,11 +58,15 @@ public class MainActivity extends BaseActivity implements MapOptionsDialogFragme
 
     private ActivityMainBinding binding;
     private MainViewModel viewModel;
+    private FavoriteViewModel favoriteViewModel;
     
     // 地图引擎
     private MapEngine mapEngine;
     private MapEngine.MapProvider currentProvider = MapEngine.MapProvider.BAIDU;
     private MapEngine.MapType currentMapType = MapEngine.MapType.NORMAL;
+    
+    // 收藏夹
+    private ActivityResultLauncher<Intent> favoriteActivityLauncher;
     
     // 百度地图相关（临时）
     private LocationClient mLocClient = null;
@@ -70,12 +84,16 @@ public class MainActivity extends BaseActivity implements MapOptionsDialogFragme
     @Override
     protected void initViewModel() {
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
+        favoriteViewModel = new ViewModelProvider(this).get(FavoriteViewModel.class);
     }
 
     @Override
     protected void initViews() {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        
+        // 初始化收藏夹 ActivityResultLauncher
+        initFavoriteActivityLauncher();
         
         // 初始化地图引擎
         initMapEngine();
@@ -94,6 +112,24 @@ public class MainActivity extends BaseActivity implements MapOptionsDialogFragme
         
         // 初始化Service连接
         initServiceConnection();
+    }
+    
+    private void initFavoriteActivityLauncher() {
+        favoriteActivityLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                    Intent data = result.getData();
+                    double lat = data.getDoubleExtra(FavoriteActivity.EXTRA_LATITUDE, 0.0);
+                    double lng = data.getDoubleExtra(FavoriteActivity.EXTRA_LONGITUDE, 0.0);
+                    String name = data.getStringExtra(FavoriteActivity.EXTRA_NAME);
+                    String address = data.getStringExtra(FavoriteActivity.EXTRA_ADDRESS);
+                    
+                    // 使用选择的位置
+                    onFavoriteLocationSelected(lat, lng, name, address);
+                }
+            }
+        );
     }
 
     @Override
@@ -254,6 +290,9 @@ public class MainActivity extends BaseActivity implements MapOptionsDialogFragme
             } else if (id == R.id.nav_route_run) {
                 Intent intent = new Intent(MainActivity.this, RouteRunActivity.class);
                 startActivity(intent);
+            } else if (id == R.id.nav_favorites) {
+                Intent intent = new Intent(MainActivity.this, FavoriteActivity.class);
+                favoriteActivityLauncher.launch(intent);
             } else if (id == R.id.nav_settings) {
                 Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
                 startActivity(intent);
@@ -459,9 +498,70 @@ public class MainActivity extends BaseActivity implements MapOptionsDialogFragme
         Double lat = viewModel.getCurrentLatitude().getValue();
         Double lng = viewModel.getCurrentLongitude().getValue();
         if (lat != null && lng != null) {
-            // 这里实现保存到收藏的功能
-            GoUtils.DisplayToast(this, getString(R.string.saved_to_favorites));
+            showAddFavoriteDialog(lat, lng);
         }
+    }
+    
+    private void showAddFavoriteDialog(double lat, double lng) {
+        // 显示对话框让用户输入收藏名称
+        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(this);
+        builder.setTitle(R.string.add_favorite);
+        
+        final android.widget.EditText input = new android.widget.EditText(this);
+        input.setHint(R.string.favorite_name);
+        android.widget.LinearLayout.LayoutParams lp = new android.widget.LinearLayout.LayoutParams(
+            android.widget.LinearLayout.LayoutParams.MATCH_PARENT,
+            android.widget.LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        input.setLayoutParams(lp);
+        builder.setView(input);
+        
+        builder.setPositiveButton(R.string.save, (dialog, which) -> {
+            String name = input.getText().toString().trim();
+            if (!name.isEmpty()) {
+                // 转换为 WGS84 坐标
+                double[] wgsLatLng = MapUtils.bd2wgs(lng, lat);
+                
+                // 保存到收藏
+                favoriteViewModel.addFavorite(
+                    name,
+                    getString(R.string.unknown_address),
+                    wgsLatLng[1], // latitude WGS84
+                    wgsLatLng[0], // longitude WGS84
+                    lng, // longitude Custom (BD09)
+                    lat // latitude Custom (BD09)
+                );
+                
+                GoUtils.DisplayToast(this, getString(R.string.favorite_saved));
+            }
+        });
+        
+        builder.setNegativeButton(R.string.cancel, (dialog, which) -> dialog.cancel());
+        builder.show();
+    }
+    
+    private void onFavoriteLocationSelected(double lat, double lng, String name, String address) {
+        // 使用从收藏夹选择的位置
+        mMarkLatLngMap = new LatLng(lat, lng);
+        
+        // 更新ViewModel
+        viewModel.setCurrentLatitude(lat);
+        viewModel.setCurrentLongitude(lng);
+        viewModel.setCurrentLocationName(name != null ? name : getString(R.string.unknown_location));
+        
+        // 刷新底部抽屉
+        updateLocationInfo(lat, lng);
+        binding.locationBottomSheet.tvLocationName.setText(name != null ? name : getString(R.string.unknown_location));
+        
+        // 添加地图标记
+        addMarkerToMap(lat, lng);
+        
+        // 移动到该位置
+        if (mapEngine != null) {
+            mapEngine.moveToLocation(lat, lng, 16.0f);
+        }
+        
+        GoUtils.DisplayToast(this, getString(R.string.location_updated));
     }
 
     @Override

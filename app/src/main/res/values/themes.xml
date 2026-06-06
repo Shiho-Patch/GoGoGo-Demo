@@ -97,6 +97,12 @@
         <item name="cornerSize">16dp</item>
     </style>
     
+    <!-- Circle Shape Appearance (for icons) -->
+    <style name="ShapeAppearanceOverlay.GoGoGo.Circle" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+    
     <style name="ShapeAppearance.GoGoGo.MediumComponent" parent="ShapeAppearance.Material3.MediumComponent">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">16dp</item>

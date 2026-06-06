@@ -16,6 +16,10 @@
             android:id="@+id/nav_route"
             android:icon="@drawable/ic_map" 
             android:title="路线管理" />
+        <item
+            android:id="@+id/nav_favorites"
+            android:icon="@drawable/ic_bookmark_24"
+            android:title="@string/favorites" />
     </group>
     
     <group>
