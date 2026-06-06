@@ -25,20 +25,6 @@ jobs:
           distribution: 'temurin'
           cache: gradle
 
-      - name: Generate Debug Keystore
-        run: |
-          mkdir -p keystore
-          keytool -genkeypair \
-            -v \
-            -keystore keystore/GoGoGo.jks \
-            -alias GoGoKey \
-            -keyalg RSA \
-            -keysize 2048 \
-            -validity 10000 \
-            -storepass GoGoGo \
-            -keypass GoGoGo \
-            -dname "CN=CI, OU=CI, O=CI, L=CI, ST=CI, C=CN"
-
       - name: Create local.properties
         run: |
           cat << EOF > local.properties
